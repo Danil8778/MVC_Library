@@ -2,13 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Show</title>
 </head>
 <body>
-<div>
-  <a th:text="${show}"></a>
 
-</div>
+<p th:text="${person}"></p>
+<br/>
+
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Edit"/>
+</form>
 
 </body>
 </html>

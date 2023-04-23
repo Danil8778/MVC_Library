@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import pnevsky.com.models.Book;
 import pnevsky.com.models.Person;
 import java.util.List;
-
 
 
 @Component
@@ -40,7 +40,18 @@ public class PersonDAO {
                 "WHERE id=?", person.getName(), person.getBirthYear(), id);
     }
 
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM People WHERE id=?", id);
+    }
 
+    public List<Book> getPersonBooks(int id) {
+        List<Book> personBooks = jdbcTemplate.query(
+                "SELECT * FROM Books WHERE person_id=?",
+                new Object[]{id}, new BeanPropertyRowMapper<>(Book.class));
+        return personBooks;
+    }
 
-
+    public void returnBook(int id) {
+        jdbcTemplate.update("update books set person_id=null where id=?", id);
+    }
 }

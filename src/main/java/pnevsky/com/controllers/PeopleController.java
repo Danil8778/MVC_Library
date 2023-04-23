@@ -25,24 +25,38 @@ public class PeopleController {
         return "people/index";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", personDAO.show(id));
-        return "people/show";
-    }
-
-    @GetMapping ("/new")
-    public String newPerson(Model model){
-        Person person = new Person();
-        model.addAttribute("person",person);
-        return "people/new";
-    }
-
     @PostMapping()
     public String create(Person person, Model model){
         model.addAttribute("person", person);
         personDAO.save(person);
         return "redirect:/people";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("personBooks", personDAO.getPersonBooks(id));
+        return "people/show";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable int id, Model model, Person person){
+        model.addAttribute("person", person);
+        personDAO.update(person, id);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable int id){
+        personDAO.delete(id);
+        return "redirect:/people";
+    }
+
+    @GetMapping ("/new")
+    public String addPerson(Model model){
+        Person person = new Person();
+        model.addAttribute("person",person);
+        return "people/new";
     }
 
     @GetMapping("/{id}/edit")
@@ -51,10 +65,11 @@ public class PeopleController {
         return "people/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@PathVariable int id, Model model, Person person){
-        model.addAttribute("person", person);
-        personDAO.update(person, id);
-        return "redirect:/people";
+    @PatchMapping("/{id}/edit/{bookId}")
+    public String returnBook(@PathVariable ("id") int id,@PathVariable ("bookId") int bookId, Model model){
+        personDAO.returnBook(bookId);
+        model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("personBooks", personDAO.getPersonBooks(id));
+        return "redirect: /people/{id}";
     }
 }

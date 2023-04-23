@@ -15,8 +15,6 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import javax.sql.DataSource;
 
-
-
 @Configuration
 @ComponentScan("pnevsky.com")
 @EnableWebMvc
@@ -46,6 +44,7 @@ public class SpringConfig implements WebMvcConfigurer {
         templateEngine.setEnableSpringELCompiler(true);
         return templateEngine;
     }
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();

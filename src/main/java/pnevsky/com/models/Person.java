@@ -7,9 +7,7 @@ public class Person {
 
     private int birthYear;
 
-    public Person() {
-
-    }
+    public Person() { }
 
     public Person(String name, int birthYear) {
         this.name = name;

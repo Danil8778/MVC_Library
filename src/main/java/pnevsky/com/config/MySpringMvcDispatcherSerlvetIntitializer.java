@@ -48,5 +48,4 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
         FilterRegistration.Dynamic characterEncoding = aContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
     }
-
 }

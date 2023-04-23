@@ -10,9 +10,7 @@ public class Book {
 
     private int year;
 
-    public Book() {
-
-    }
+    public Book() { }
 
     public Book(String title, String author, int year) {
         this.title = title;
@@ -43,7 +41,7 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
-    
+
     public void setYear(int year) {
         this.year = year;
     }
@@ -52,4 +50,8 @@ public class Book {
         return year;
     }
 
+    @Override
+    public String toString() {
+        return "id " + id + ", " + title + ", " + author + ", " + year;
+    }
 }

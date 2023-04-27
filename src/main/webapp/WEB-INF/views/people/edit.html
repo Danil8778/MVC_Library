@@ -9,9 +9,11 @@
       th:object="${person}">
   <label th:for="name">Input name: </label>
   <input th:type="text" th:field="*{name}" th:id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
   <br/>
   <label th:for="birthYear">Input year of birth: </label>
-  <input th:type="text" th:field="*{birthYear}" th:id="birthYear">
+  <input th:type="integer" th:field="*{birthYear}" th:id="birthYear">
+    <div style="color: red" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}">Year of birth Error</div>
   <br/>
   <input type="submit" th:value="Update"/>
 

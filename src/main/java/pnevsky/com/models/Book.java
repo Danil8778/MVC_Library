@@ -1,9 +1,7 @@
 package pnevsky.com.models;
 
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Book {
     private int id;

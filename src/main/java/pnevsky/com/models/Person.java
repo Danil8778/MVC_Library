@@ -1,8 +1,6 @@
 package pnevsky.com.models;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class Person {
     private int id;
@@ -10,6 +8,8 @@ public class Person {
     @NotEmpty(message = "The field should not be empty")
     @Size(max = 25, message = "The field should be less than 25 characters")
     private String name;
+
+
 
     @Min(value = 1900, message = "The year of birth should not me less then 1900")
     private int birthYear;

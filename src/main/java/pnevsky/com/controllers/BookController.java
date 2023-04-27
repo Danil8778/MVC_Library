@@ -3,11 +3,14 @@ package pnevsky.com.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pnevsky.com.DAO.BookDAO;
 import pnevsky.com.DAO.PersonDAO;
 import pnevsky.com.models.Book;
 import pnevsky.com.models.Person;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -33,7 +36,11 @@ public class BookController {
     }
 
     @PostMapping()
-    public String create(Book book, Model model){
+    public String create(@Valid Book book, Model model, BindingResult bindingResult){
+        bindingResult.getModel().put("book", book);
+        if(bindingResult.hasErrors())
+            return "books/new";
+
         model.addAttribute("book", book);
         bookDAO.create(book);
         return "redirect:/books";
@@ -54,7 +61,12 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable ("id") int id, Book book, Model model){
+    public String update(@PathVariable ("id") int id, Book book, Model model,
+                         BindingResult bindingResult){
+        bindingResult.getModel().put("book", book);
+        if(bindingResult.hasErrors())
+            return "books/new";
+
         model.addAttribute("book", book);
         bookDAO.update(id, book);
         return "redirect:/books";

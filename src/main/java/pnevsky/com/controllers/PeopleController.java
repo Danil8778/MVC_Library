@@ -3,20 +3,25 @@ package pnevsky.com.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pnevsky.com.DAO.PersonDAO;
 import pnevsky.com.models.Person;
+import pnevsky.com.util.PersonValidator;
 
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
     private final PersonDAO personDAO;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -26,10 +31,16 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String create(Person person, Model model){
-        model.addAttribute("person", person);
-        personDAO.save(person);
-        return "redirect:/people";
+
+    public String create (@Valid Person person, BindingResult bindingResult, Model model){
+       bindingResult.getModel().put("person", person);
+       personValidator.validate(person, bindingResult);
+       if (bindingResult.hasErrors())
+           return "/people/new";
+
+       model.addAttribute("person", person);
+       personDAO.save(person);
+       return "redirect:/people";
     }
 
     @GetMapping("/{id}")

@@ -1,13 +1,22 @@
 package pnevsky.com.models;
 
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class Book {
     private int id;
 
+    @NotEmpty (message = "The field should not be empty")
+    @Size(max = 100, message = "The title should not be more than 100 characters" )
     private String title;
 
+    @NotEmpty (message = "The field should not be empty")
+    @Size(max = 100, message = "The title should not be more than 100 characters" )
     private String author;
 
+    @Min(value = 1500, message = "The year should be more than 1500")
     private int year;
 
     public Book() { }

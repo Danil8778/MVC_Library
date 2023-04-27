@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import pnevsky.com.models.Book;
 import pnevsky.com.models.Person;
 import java.util.List;
+import java.util.Optional;
 
 
 @Component
@@ -53,5 +54,11 @@ public class PersonDAO {
 
     public void returnBook(int id) {
         jdbcTemplate.update("update books set person_id=null where id=?", id);
+    }
+
+    public Optional<Person> getPersonByName(String name) {
+        return jdbcTemplate.query("SELECT * FROM people WHERE name=?",
+                new Object[]{name}, new BeanPropertyRowMapper<>(Person.class)).
+                stream().findAny();
     }
 }
